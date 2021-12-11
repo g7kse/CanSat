@@ -1,0 +1,31 @@
+import digitalio
+import board
+import time
+import adafruit_rfm9x
+import busio
+
+spi = busio.SPI(clock=board.GP2, MOSI=board.GP3, MISO=board.GP4)
+cs = digitalio.DigitalInOut(board.GP6)
+reset = digitalio.DigitalInOut(board.GP7)
+rfm9x = adafruit_rfm9x.RFM9x(spi, cs, reset, 433.0)
+
+def try_read():
+    return rfm9x.receive(timeout=1.0)
+
+def rssi():
+    return rfm9x.rssi
+
+led = digitalio.DigitalInOut(board.LED)
+led.direction = digitalio.Direction.OUTPUT
+
+print("Waiting for packets...")
+while True:
+    led.value = not led.value
+    packet = rfm9x.receive()
+    packet_count = 0
+    if packet is not None:
+        #print("Received (raw payload): {0}".format(packet[4:]))
+        print ("RSSI: {0}db".format(rfm9x.last_rssi))
+        packet_text = str(packet, 'ascii')
+        print('{0}'.format(packet_text))
+        packet_count = packet_count + 1
