@@ -19,7 +19,6 @@ Then define the temperature, pressure and altitude
 i2c = busio.I2C(scl=board.GP15, sda=board.GP14)
 bmp280 = adafruit_bmp280.Adafruit_BMP280_I2C(i2c, address=0x76)
 
-
 def sat_temp():
     return bmp280_sensor.temperature
 
@@ -28,7 +27,6 @@ def sat_pressure():
   
 def sat_alt():
     return bmp280_sensor.altitude
-
 
 '''
 Set the local atmospheric pressure (QNH). This will be used to calculate the altitude. 
@@ -39,36 +37,32 @@ inaccuracies.
 bmp280.sea_level_pressure = 1034
 
 '''
-deinine the pins for the RFM9x transmitter
+Define the pins for the RFM9x transmitter
 CLK = GP2
 MOSI = GP3
 MISO = GP4
 CS = GP6
 Reset = GP7
-Then define the paramters for sending the message payload
+Then define the parameters for sending the message payload
 '''
   
 spi = busio.SPI(clock=board.GP2, MOSI=board.GP3, MISO=board.GP4)
 cs = digitalio.DigitalInOut(board.GP6)
 reset = digitalio.DigitalInOut(board.GP7)
-rfm9x = adafruit_rfm9x.RFM9x(spi, cs, reset, 433.0)
-
+rfm9x = adafruit_rfm9x.RFM9x(spi, cs, reset, 433.0) # set the transmit frequency to 433MHz
 
 def send(message):
     rfm9x.send(message)
 
-
 while True:
 
     led.value = not led.value
-    #start = "/*"
-    #stop = "*/"
     Id = "CanSat Example,"
     sat_time = str("%.0f," % (time.monotonic()))# + " s"
     temp = str("%.1f," % (bmp280.temperature))# + " C"
     pressure = str("%.0f," % (bmp280.pressure))# + " hPa"
     altitude = str("%.1f," % (bmp280.altitude))# + " meters"
-    Payload = Id + sat_time + temp + pressure + altitude
+    Payload = Id + sat_time + temp + pressure + altitude # message payload string
     rfm9x.send(Payload)
     print(Payload)
     time.sleep(1)
