@@ -5,7 +5,6 @@ import adafruit_rfm9x
 import busio
 import math
 
-
 '''
 Define the pins for the RFM9x receiver
 CLK = GP2
@@ -18,7 +17,6 @@ spi = busio.SPI(clock=board.GP2, MOSI=board.GP3, MISO=board.GP4)
 cs = digitalio.DigitalInOut(board.GP6)
 reset = digitalio.DigitalInOut(board.GP7)
 rfm9x = adafruit_rfm9x.RFM9x(spi, cs, reset, 433.0) # set the receive frequency to 433MHz
-
 
 def try_read():
     return rfm9x.receive(timeout=1.0)
