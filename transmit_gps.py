@@ -108,7 +108,7 @@ while True:
         json_start = str("/*")
         json_end = str("*/")
     
-        Payload = json_end + Id + sat_time + sat_date + temp + pressure + lat + long + gps_alt + sats + json_end # message payload string with json markers
+        Payload = json_start + Id + sat_time + sat_date + temp + pressure + lat + long + gps_alt + sats + json_end # message payload string with json markers
         
         #Send the message payload
         rfm9x.send(Payload)
