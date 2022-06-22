@@ -111,7 +111,7 @@ while True:
         Payload = json_end + Id + sat_time + sat_date + temp + pressure + lat + long + gps_alt + sats + json_end # message payload string with json markers
         
         #Send the message payload
-                rfm9x.send(Payload)
+        rfm9x.send(Payload)
         print(Payload)# print it in the serial terminal for good measure
         
         led.value = not led.value #Flash the led after th payload is sent
