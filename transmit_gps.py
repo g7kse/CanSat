@@ -6,12 +6,13 @@ import adafruit_bmp280
 import adafruit_rfm9x
 import adafruit_gps
 
-# Setup GPS
+#Setup GPS
 uart = busio.UART(board.GP16, board.GP17, baudrate=9600, timeout=10)# set up uart
 gps = adafruit_gps.GPS(uart, debug=False)#create gps module instance
 gps.send_command(b"PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0")#Turn on the basic GGA and RMC info (what you typically want)
 gps.send_command(b"PMTK220,1000")#set update rate (1second)
 last_print = time.monotonic()
+
 
 #define the LED
 led = digitalio.DigitalInOut(board.LED)
@@ -43,14 +44,6 @@ Its important to note that the sensor only infers altitude for the pressure so i
 inaccuracies.
 '''
 bmp280.sea_level_pressure = 1034
-
-'''
-Setting up the gps
-'''
-gps = adafruit_gps.GPS(uart, debug=False)
-gps.send_command(b'PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0')
-gps.send_command(b'PMTK220,1000')
-last_print = time.monotonic()
 
 '''
 Define the pins for the RFM9x transmitter
