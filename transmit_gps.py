@@ -54,15 +54,15 @@ CS = GP6
 Reset = GP7
 Then define the parameters for sending the message payload
 '''
-
-spi = busio.SPI(clock=board.GP2, MOSI=board.GP3, MISO=board.GP4)
+'''
+spi = busio.SPI(clock=board.GP2, MOSI=board.GP5, MISO=board.GP4)
 cs = digitalio.DigitalInOut(board.GP6)
 reset = digitalio.DigitalInOut(board.GP7)
 rfm9x = adafruit_rfm9x.RFM9x(spi, cs, reset, 433.0) # set the transmit frequency to 433MHz
 
 def send(message):
     rfm9x.send(message)
-
+'''
 while True:
     
     gps.update()
@@ -83,8 +83,8 @@ while True:
                     )
         
         sat_date = "{}/{}/{},".format(
-                    gps.timestamp_utc.tm_mon,
                     gps.timestamp_utc.tm_mday,
+                    gps.timestamp_utc.tm_mon,
                     gps.timestamp_utc.tm_year,
                     )
 
@@ -107,5 +107,6 @@ while True:
         rfm9x.send(Payload)
         print(Payload)# print it in the serial terminal for good measure
         
-        led.value = not led.value #Flash the led after th payload is sent
+        led.value = not led.value #Flash the led after the payload is sent
         print("=" * 70)
+
