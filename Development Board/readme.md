@@ -1,1 +1,3 @@
-# Here you'll find some basic development boards.Do not use just yet until v1 has been verified.
+# Here you'll find some basic development boards.#
+
+The V1.1 boards have been verified and can be obtained very cheaply from JLCPCB
